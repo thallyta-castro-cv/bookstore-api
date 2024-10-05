@@ -2,22 +2,21 @@ import express from "express";
 import connectDatabase from "./config/dbConnect.js";
 import routes from "./routes/index.js";
 import errorHandle from "./middlewares/errorHandle.js";
+import resourceNotFoundHandle from "./middlewares/resourceNotFoundHandle.js"
 
-const connection = await connectDatabase();
+const db = await connectDatabase();
 
-connection.on("error", (error) => {
-    console.error("connection error", error);
+db.on("error", console.log.bind(console, "Erro de conexão"));
+db.once("open", () => {
+  console.log("conexão com o banco feita com sucesso");
 });
 
-connection.once("open", () => {
-    console.log("connection successfully!");
-});
 
 const app = express();
-
+app.use(express.json());
 routes(app);
 
-app.use(express.json());
+app.use(resourceNotFoundHandle);
 app.use(errorHandle);
 
 export default app;

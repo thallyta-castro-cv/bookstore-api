@@ -1,4 +1,5 @@
 import { author } from "../models/Author.js"
+import NotFound from "../exceptions/NotFound.js";
 
 class AuthorController {
   static async updateAuthor(req, res, next) {
@@ -27,7 +28,7 @@ class AuthorController {
       if(authorFound !== null){
         res.status(200).json(authorFound);
       } else {
-        res.status(404).json({ message: "Id do autor não encontrado." });
+        next(new NotFound("Id do autor não encontrado."));
       }
     } catch(erro) {
       next(erro);    
