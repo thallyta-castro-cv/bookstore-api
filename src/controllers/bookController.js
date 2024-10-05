@@ -2,19 +2,17 @@ import { author } from "../models/Author.js";
 import book from "../models/Book.js";
 
 class BookController {
-  static async updateBook(req, res) {
+  static async updateBook(req, res, next) {
     try {
       const id = req.params.id;
       await book.findByIdAndUpdate(id, req.body);
       res.status(200).json({ message: "Livro atualizado" });
     } catch (erro) {
-      res
-        .status(500)
-        .json({ message: `${erro.message} - falha na atualização do livro` });
+      next(erro);
     }
   }
 
-  static async createBooks(req, res) {
+  static async createBooks(req, res, next) {
     const newBook = req.body;
 
     try {
@@ -25,54 +23,46 @@ class BookController {
         .status(201)
         .json({ message: "criado com sucesso", livro: createdBook });
     } catch (erro) {
-      res
-        .status(500)
-        .json({ message: `${erro.message} - falha ao cadastrar livro!` });
+      next(erro);
     }
   }
 
-  static async getById(req, res) {
+  static async getById(req, res, next) {
     try {
       const id = req.params.id;
       const bookFound = await book.findById(id);
       res.status(200).json(bookFound);
     } catch (erro) {
-      res
-        .status(500)
-        .json({ message: `${erro.message} - falha na requisição do livro` });
+      next(erro);
     }
   }
 
-  static async getBooks(req, res) {
+  static async getBooks(req, res, next) {
     try {
       const listBooks = await book.find({});
       res.status(200).json(listBooks);
     } catch (erro) {
-      res
-        .status(500)
-        .json({ message: `${erro.message} - falha na requisição` });
+      next(erro);
     }
   }
 
-  static async deleteBook(req, res) {
+  static async deleteBook(req, res, next) {
     try {
       const id = req.params.id;
       await book.findByIdAndDelete(id, req.body);
       res.status(200).json({ message: "Livro deletado com sucesso" });
     } catch (erro) {
-      res
-        .status(500)
-        .json({ message: `${erro.message} - falha na exclusão do livro` });
+      next(erro);
     }
   }
 
-  static async listBooksByEditora(req, res) {
+  static async listBooksByEditora(req, res, next) {
     const editora = req.query.editora;
     try {
       const booksByEditora = await book.find({ editora: editora });
       res.status(200).json(booksByEditora);
     } catch (erro) {
-      res.status(500).json({ message: `${erro.message} - falha na busca` });
+      next(erro);
     }
   }
 }
