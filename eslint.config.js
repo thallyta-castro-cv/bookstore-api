@@ -23,9 +23,6 @@ export default [
       // Argumentos que começam com _ (underscore) são ignorados
       "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
       
-      // Exige que blocos de código em `if`, `else`, `for`, etc. estejam sempre entre chaves `{}`.
-      "curly": "error",
-      
       // Sugere o uso de `const` ao invés de `let` quando a variável não é reatribuída
       "prefer-const": "error",
       
