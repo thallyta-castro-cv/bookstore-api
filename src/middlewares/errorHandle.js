@@ -6,13 +6,13 @@ import NotFound from "../exceptions/NotFound.js";
 
 // eslint-disable-next-line no-unused-vars
 function errorHandle(erro, req, res, next) {
-  if (erro instanceof mongoose.Error.CastError) {
+  if (erro instanceof mongoose.Error.CastError) { 
     new BadRequestException().sendResponse(res);
-  } else if (erro instanceof mongoose.Error.ValidationError) {
+  } else if (erro instanceof mongoose.Error.ValidationError) { 
     new ValidationError(erro).sendResponse(res);
-  } else if(erro instanceof NotFound){
+  } else if(erro instanceof NotFound){ 
     erro.sendResponse(res);
-  } else {
+  } else { 
     new BaseError().sendResponse(res);
   }
 }

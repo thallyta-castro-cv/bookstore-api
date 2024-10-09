@@ -36,12 +36,14 @@ class AuthorController {
   };
 
   static async getAuthors(req, res, next) {
-    try {
-      const listAuthors = await author.find({});
-      res.status(200).json(listAuthors);
-    } catch(erro) {
+     try {
+      const resultAuthor = author.find();
+      req.resultado = resultAuthor;
+      next();
+     
+    } catch (erro) {
       next(erro);
-    }    
+    } 
   };
 
   static async deleteAuthor(req, res, next) {
