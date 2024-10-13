@@ -1,0 +1,357 @@
+openapi: 3.0.0
+info:
+  title: API de Livros e Autores
+  description: API para gerenciamento de livros e autores.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+paths:
+  /livros:
+    get:
+      summary: Retorna uma lista de livros.
+      tags:
+        - Livros
+      parameters:
+        - name: page
+          in: query
+          description: Número da página.
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Quantidade de itens por página.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de livros retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookSummary'
+        '500':
+          description: Erro interno do servidor.
+    post:
+      summary: Cria um novo livro.
+      tags:
+        - Livros
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '201':
+          description: Livro criado com sucesso.
+        '500':
+          description: Erro interno do servidor.
+  /livros/{id}:
+    get:
+      summary: Retorna um livro específico.
+      tags:
+        - Livros
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do livro.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do livro retornado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookDetail'
+        '404':
+          description: Livro não encontrado.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+      
+    put:
+      summary: Atualiza um livro específico.
+      tags:
+        - Livros
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do livro.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookInput'
+      responses:
+        '200':
+          description: Livro atualizado com sucesso.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+    delete:
+      summary: Deleta um livro específico.
+      tags:
+        - Livros
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do livro.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Livro deletado com sucesso.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+  /livros/busca:
+    get:
+      summary: Retorna uma lista de livros com base nos filtros aplicados.
+      tags:
+        - Livros
+      parameters:
+        - name: editora
+          in: query
+          description: Filtro por editora.
+          required: false
+          schema:
+            type: string
+        - name: titulo
+          in: query
+          description: Filtro por título do livro.
+          required: false
+          schema:
+            type: string
+        - name: minPaginas
+          in: query
+          description: Número mínimo de páginas.
+          required: false
+          schema:
+            type: integer
+        - name: maxPaginas
+          in: query
+          description: Número máximo de páginas.
+          required: false
+          schema:
+            type: integer
+        - name: nomeAutor
+          in: query
+          description: Filtro por nome do autor.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de livros com base nos filtros.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookDetail'
+        '500':
+          description: Erro interno do servidor.
+
+  /autores:
+    get:
+      summary: Retorna uma lista de autores.
+      tags:
+        - Autores
+      parameters:
+        - name: page
+          in: query
+          description: Número da página.
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Quantidade de itens por página.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de autores retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+        '500':
+          description: Erro interno do servidor.
+    post:
+      summary: Cria um novo autor.
+      tags:
+        - Autores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorInput'
+      responses:
+        '201':
+          description: Autor criado com sucesso.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+
+  /autores/{id}:
+    get:
+      summary: Retorna um autor específico.
+      tags:
+        - Autores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do autor.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do autor retornado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '404':
+          description: Autor não encontrado.
+        '500':
+          description: Erro interno do servidor.
+    put:
+      summary: Atualiza um autor específico.
+      tags:
+        - Autores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do autor.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorInput'
+      responses:
+        '200':
+          description: Autor atualizado com sucesso.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+    delete:
+      summary: Deleta um autor específico.
+      tags:
+        - Autores
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do autor.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Autor deletado com sucesso.
+        '400':
+          description: Um ou mais dados fornecidos estão incorretos.
+        '500':
+          description: Erro interno do servidor.
+
+components:
+  schemas:
+    BookSummary: 
+      type: object
+      properties:
+        _id:
+          type: string
+        titulo:
+          type: string
+        editora:
+          type: string
+        paginas:
+          type: integer
+        autor:
+          type: string  
+
+    BookDetail:
+      type: object
+      properties:
+        _id:
+          type: string
+        titulo:
+          type: string
+        editora:
+          type: string
+        paginas:
+          type: integer
+        autor:
+          $ref: '#/components/schemas/Author'
+
+    BookInput:  
+      type: object
+      properties:
+        titulo:
+          type: string
+        editora:
+          type: string
+        paginas:
+          type: integer
+        preco:
+          type: number
+          format: float 
+        autor:
+          type: string
+      required:
+        - titulo
+        - editora
+        - paginas
+        - preco
+        - autor
+
+    Author:
+      type: object
+      properties:
+        _id:
+          type: string
+        nome:
+          type: string
+        nacionalidade:
+          type: string
+    
+    AuthorInput:
+      type: object
+      properties:
+        nome:
+          type: string
+        nacionalidade:
+          type: string
+      required:
+       - nome
+       - nacionalidade
+  

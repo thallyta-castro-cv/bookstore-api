@@ -2,7 +2,8 @@ import express from "express";
 import connectDatabase from "./config/dbConnect.js";
 import routes from "./routes/index.js";
 import errorHandle from "./middlewares/errorHandle.js";
-import resourceNotFoundHandle from "./middlewares/resourceNotFoundHandle.js"
+import resourceNotFoundHandle from "./middlewares/resourceNotFoundHandle.js";
+import swaggerSetup from "./config/swaggerConfig.js"; 
 
 const db = await connectDatabase();
 
@@ -15,6 +16,7 @@ db.once("open", () => {
 const app = express();
 app.use(express.json());
 routes(app);
+swaggerSetup(app);
 
 app.use(resourceNotFoundHandle);
 app.use(errorHandle);
