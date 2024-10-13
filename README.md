@@ -34,6 +34,8 @@ Instale as dependências do maven com o comando:
 npm install
 ```
 
+Para iniciar a aplicação execute a seguinte ação na pasta algafood
+
 ```shell script
 npm run dev
 ```
