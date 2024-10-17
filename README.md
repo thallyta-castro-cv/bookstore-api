@@ -28,13 +28,13 @@ O objetivo é servir como base para projetos de APIs RESTful com boas práticas,
 
 Para iniciar a aplicação execute a seguinte ação na pasta raiz
 
-Instale as dependências do maven com o comando:
+Instale as dependências do npm com o comando:
 
 ```shell script
 npm install
 ```
 
-Para iniciar a aplicação execute a seguinte ação na pasta algafood
+Para iniciar a aplicação execute a seguinte ação na pasta raiz
 
 ```shell script
 npm run dev
