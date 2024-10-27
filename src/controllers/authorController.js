@@ -1,60 +1,53 @@
-import { author } from "../models/index.js"
-import NotFound from "../exceptions/NotFound.js";
+import AuthorService from "../services/authorService.js";
 
 class AuthorController {
   static async updateAuthor(req, res, next) {
     try {
       const id = req.params.id;
-      await author.findByIdAndUpdate(id, req.body);
+      await AuthorService.updateAuthor(id, req.body);
       res.status(200).json({ message: "Autor atualizado" });
-    } catch(erro) {
-      next(erro);
-    }    
-  };
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async createAuthors(req, res, next) {
     try {
-      const newAuthor = await author.create(req.body);
-      res.status(201).json({ message: "criado com sucesso", autor: newAuthor });
-    } catch (erro) {
-      next(erro);
+      const newAuthor = await AuthorService.createAuthor(req.body);
+      res.status(201).json({ message: "Criado com sucesso", autor: newAuthor });
+    } catch (error) {
+      next(error);
     }
-  };
+  }
 
   static async getById(req, res, next) {
     try {
       const id = req.params.id;
-      const authorFound = await author.findById(id);
-      if(authorFound !== null){
-        res.status(200).json(authorFound);
-      } else {
-        next(new NotFound("Id do autor não encontrado."));
-      }
-    } catch(erro) {
-      next(erro);    
-    }    
-  };
+      const authorFound = await AuthorService.getAuthorById(id);
+      res.status(200).json(authorFound);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async getAuthors(req, res, next) {
-     try {
-      const resultAuthor = author.find();
-      req.resultado = resultAuthor;
-      next();
-     
-    } catch (erro) {
-      next(erro);
-    } 
-  };
+    try {
+      const authors = await AuthorService.getAllAuthors();
+      res.status(200).json(authors);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async deleteAuthor(req, res, next) {
     try {
       const id = req.params.id;
-      await author.findByIdAndDelete(id, req.body);
+      await AuthorService.deleteAuthor(id);
       res.status(200).json({ message: "Autor deletado com sucesso" });
-    } catch(erro) {
-      next(erro);
-    }    
-  };
-};
+    } catch (error) {
+      next(error);
+    }
+  }
+}
 
 export default AuthorController;
