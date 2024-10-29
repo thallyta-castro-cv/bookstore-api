@@ -18,8 +18,9 @@ class AuthService {
     }
 
     const accessToken = this.getAccessToken(user);
+    const expiresIn = 86400;
 
-    return { accessToken };
+    return { accessToken, expiresIn };
   }
 
   static getAccessToken(user) {

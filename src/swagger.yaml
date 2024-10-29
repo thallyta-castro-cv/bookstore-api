@@ -384,6 +384,29 @@ paths:
           description: Um ou mais dados fornecidos estão incorretos.
         '500':
           description: Erro interno do servidor.
+  /auth/login:
+    post:
+      summary: Autentica um usuário e retorna um token de acesso.
+      tags:
+        - Autenticação
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLoginInput'
+      responses:
+        '200':
+          description: Usuário autenticado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '401':
+          description: Credenciais inválidas.
+        '500':
+          description: Erro interno do servidor.
+
 
 components:
   schemas:
@@ -484,3 +507,24 @@ components:
        - nome
        - email
        - senha
+
+    AuthLoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+        senha:
+          type: string
+      required:
+        - email
+        - senha
+
+    AuthToken:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Token JWT para autenticação.
+        expiresIn:
+          type: integer
+          description: Duração em segundos até o token expirar.
