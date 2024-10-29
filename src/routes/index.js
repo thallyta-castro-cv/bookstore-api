@@ -6,8 +6,7 @@ import auth from "./authRoutes.js"
 
 const routes = (app) => {
   app.route("/").get((req, res) => res.status(200).send("Curso de Node.js"));
-  app.use(express.json(), books, authors, users, auth);
+  app.use(express.json(), auth, books, authors, users);
 };
  
 export default routes;
- 

@@ -22,7 +22,7 @@ class UserController {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
+  
   static async createUser(req, res, next) {
     try {
       const newUser = await UserService.createUser(req.body);

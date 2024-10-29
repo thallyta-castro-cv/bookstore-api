@@ -19,10 +19,6 @@ export default [
       // Gera um aviso ao usar `console.log()`, útil para evitar deixar console em produção
       "no-console": "warn",
       
-      // Evita declarar variáveis ou parâmetros que não são utilizados
-      // Argumentos que começam com _ (underscore) são ignorados
-      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-      
       // Sugere o uso de `const` ao invés de `let` quando a variável não é reatribuída
       "prefer-const": "error",
       

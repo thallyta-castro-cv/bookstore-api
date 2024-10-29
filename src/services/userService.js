@@ -28,8 +28,8 @@ class UserService {
         senha: passwordHash,
       });
 
-      return newUser;
-      
+      return newUser;     
+    
     // eslint-disable-next-line no-unused-vars
     } catch (error) {
       throw new Error("Erro ao cadastrar usuário");

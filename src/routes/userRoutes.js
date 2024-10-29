@@ -1,7 +1,10 @@
 import express from "express";
 import UserController from "../controllers/userController.js";
+import authenticated from "../middlewares/authenticated.js";
 
 const routes = express.Router();
+
+routes.use(authenticated);
 
 routes.get("/usuarios", UserController.getUsers);
 routes.get("/usuarios/:id", UserController.getById);
