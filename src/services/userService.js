@@ -1,5 +1,6 @@
 import user from "../models/User.js";
 import NotFound from "../exceptions/NotFound.js";
+import bcrypt from "bcryptjs";
 
 class UserService {
   static async getUsers() {
@@ -13,7 +14,26 @@ class UserService {
   }
 
   static async createUser(data) {
-    return await user.create(data);
+    const isUser = await user.findOne({ email: data.email });
+    if (isUser) {
+      throw new Error("Usuário já cadastrado");
+    }
+
+    try {
+      const passwordHash = await bcrypt.hash(data.senha, 8);
+
+      const newUser = await user.create({
+        nome: data.nome,
+        email: data.email,
+        senha: passwordHash,
+      });
+
+      return newUser;
+      
+    // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      throw new Error("Erro ao cadastrar usuário");
+    }
   }
 
   static async updateUser(id, data) {
