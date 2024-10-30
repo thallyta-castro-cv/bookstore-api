@@ -25,7 +25,6 @@ class RoleController {
       const newRole = await RoleService.createRole(req.body);
       res.status(201).send(newRole);
     } catch (error) {
-        console.error(error)
       next(error);
     }
   }
