@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    id: { type: mongoose.Schema.Types.ObjectId},
     nome: {
       type: String,
       required: [true, "O nome do(a) usuário é obrigatório"],
@@ -19,8 +18,14 @@ const userSchema = new mongoose.Schema(
       minlength: [6, "A senha precisa ter pelo menos 6 caracteres"],
       select: false
     },
+    roles: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'roles'
+      }
+    ]
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 userSchema.set('toJSON', {

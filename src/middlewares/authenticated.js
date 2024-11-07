@@ -19,8 +19,8 @@ async function authenticated(req, res, next) {
 
     const { id, email } = jsonwebtoken.decode(accessToken);
 
-    req.userId = id;
-    req.userEmail = email;
+    req.id = id;
+    req.email = email;
 
     return next();
 

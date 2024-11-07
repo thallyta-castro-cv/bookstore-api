@@ -1,7 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import jsonwebtoken from "jsonwebtoken";
-import jsonSecret from "../../src/config/jsonSecret.js";
+import getAccessToken from "./tokenService.js";
 
 class AuthService {
   static async login(email, senha) {
@@ -17,22 +16,11 @@ class AuthService {
       throw new Error("Usuário ou senha estão incorretos!");
     }
 
-    const accessToken = this.getAccessToken(user);
+    const accessToken = getAccessToken(user);
     const expiresIn = 86400;
 
     return { accessToken, expiresIn };
-  }
-
-  static getAccessToken(user) {
-    return jsonwebtoken.sign({
-        id: user.id,
-        email: user.email,
-      },
-      jsonSecret.secret,{
-        expiresIn: 86400,
-      }
-    );
-  }
+  }  
 }
 
 export default AuthService;

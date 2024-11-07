@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 
 const bookSchema = new mongoose.Schema(
   {
-    id: { type: String },
     titulo: {
       type: String,
       required: [true, "O título do livro é obrigatório"],
@@ -28,7 +27,7 @@ const bookSchema = new mongoose.Schema(
       required: [true, "O(a) autor(a) é obrigatório"],
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 const book = mongoose.model("livros", bookSchema);

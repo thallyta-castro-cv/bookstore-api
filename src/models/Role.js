@@ -12,8 +12,9 @@ const roleSchema = new mongoose.Schema(
       required: [true, "A descrição do papel é obrigatória"],
       maxlength: [100, "A descrição não pode exceder 100 caracteres"],
     },
+    permissoes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'permissoes' }],
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
 
 const role = mongoose.model("roles", roleSchema);

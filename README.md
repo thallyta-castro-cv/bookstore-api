@@ -24,6 +24,55 @@ O objetivo é servir como base para projetos de APIs RESTful com boas práticas,
 - **Nodemon**: Ferramenta de desenvolvimento que reinicia automaticamente o servidor quando alterações são detectadas.
 - **Swagger**: Biblioteca Open Api 3 que gera a documentação dos endpoints do projeto.
 
+## Estrutura de Banco de Dados - Livraria API
+
+```mermaid
+erDiagram
+    USUARIOS {
+        ObjectId _id
+        string nome
+        string email
+        string senha
+        ObjectId[] permissoes FK "Referência para Permissões"
+        ObjectId[] roles FK "Referência para Papéis"
+    }
+    
+    ROLES {
+        ObjectId _id
+        string nome
+        string descricao
+        ObjectId[] usuarios FK "Referência para Usuários"
+    }
+    
+    PERMISSOES {
+        ObjectId _id
+        string nome
+        string descricao
+        ObjectId[] usuarios FK "Referência para Usuários"
+    }
+    
+    AUTORES {
+        ObjectId _id
+        string nome
+        string nacionalidade
+    }
+
+    LIVROS {
+        ObjectId _id
+        string titulo
+        string editora
+        int paginas
+        ObjectId autor FK "Referência para Autor"
+    }
+
+    %% Definindo os relacionamentos entre as coleções
+
+    USUARIOS }o--o{ ROLES : "possui vários"
+    USUARIOS }o--o{ PERMISSOES : "possui vários"
+    ROLES }o--o{ PERMISSOES : "tem permissões"
+    LIVROS }o--|| AUTORES : "escrito por"
+```
+
 # Iniciando o projeto
 
 Para iniciar a aplicação execute a seguinte ação na pasta raiz

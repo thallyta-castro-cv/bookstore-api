@@ -21,12 +21,12 @@ class UserController {
       next(error);
     }
   }
-
   
+  // eslint-disable-next-line no-unused-vars
   static async createUser(req, res, next) {
     try {
       const newUser = await UserService.createUser(req.body);
-      res.status(201).json({ message: "Usuário criado com sucesso", newUser });
+      res.status(201).json({ newUser });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

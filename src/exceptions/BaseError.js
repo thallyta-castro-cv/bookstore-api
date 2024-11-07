@@ -6,11 +6,14 @@ class BaseError extends Error {
   }
 
   sendResponse(res) {
+    
     res.status(this.status).send({
       mensagem: this.message,
       status: this.status,
     });
   }
+
+  
 }
 
 export default BaseError;
