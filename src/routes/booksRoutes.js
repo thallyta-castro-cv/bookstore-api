@@ -6,11 +6,11 @@ import permissions from '../middlewares/permissions.js';
 
 const routes = express.Router();
 
-routes.get("/livros", permissions(['viwer']), BookController.getBooks);
-routes.get("/livros/busca", roles(['admin']), BookController.listBooksWithFilters, pagination);
-routes.get("/livros/:id", roles(['admin']), BookController.getById);
-routes.post("/livros", roles(['admin']), BookController.createBooks);
-routes.put("/livros/:id", roles(['admin']), BookController.updateBook);
-routes.delete("/livros/:id", roles(['admin']), BookController.deleteBook);
+routes.get("/v1/livros", permissions(['viwer']), BookController.getBooks);
+routes.get("/v1/livros/busca", roles(['admin']), BookController.listBooksWithFilters, pagination);
+routes.get("/v1/livros/:id", roles(['admin']), BookController.getById);
+routes.post("/v1/livros", roles(['admin']), BookController.createBooks);
+routes.put("/v1/livros/:id", roles(['admin']), BookController.updateBook);
+routes.delete("/v1/livros/:id", roles(['admin']), BookController.deleteBook);
 
 export default routes;

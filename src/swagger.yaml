@@ -8,7 +8,7 @@ servers:
     description: Servidor local
 
 paths:
-  /livros:
+  /v1/livros:
     get:
       summary: Retorna uma lista de livros.
       tags:
@@ -52,7 +52,7 @@ paths:
           description: Livro criado com sucesso.
         '500':
           description: Erro interno do servidor.
-  /livros/{id}:
+  /v1/livros/{id}:
     get:
       summary: Retorna um livro específico.
       tags:
@@ -120,7 +120,7 @@ paths:
           description: Um ou mais dados fornecidos estão incorretos.
         '500':
           description: Erro interno do servidor.
-  /livros/busca:
+  /v1/livros/busca:
     get:
       summary: Retorna uma lista de livros com base nos filtros aplicados.
       tags:
@@ -168,7 +168,7 @@ paths:
         '500':
           description: Erro interno do servidor.
 
-  /autores:
+  /v1/autores:
     get:
       summary: Retorna uma lista de autores.
       tags:
@@ -215,7 +215,7 @@ paths:
         '500':
           description: Erro interno do servidor.
 
-  /autores/{id}:
+  /v1/autores/{id}:
     get:
       summary: Retorna um autor específico.
       tags:
@@ -384,6 +384,116 @@ paths:
           description: Um ou mais dados fornecidos estão incorretos.
         '500':
           description: Erro interno do servidor.
+  
+  /permissoes:
+    get:
+      summary: Retorna todas as permissões
+      tags:
+        - Permissões
+      responses:
+        '200':
+          description: Lista de permissões retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Permission'
+        '500':
+          description: Erro ao buscar permissões.
+
+    post:
+      summary: Cria uma nova permissão
+      tags:
+        - Permissões
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionInput'
+      responses:
+        '201':
+          description: Permissão criada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '400':
+          description: Erro ao criar permissão - dados inválidos ou permissão já existe.
+
+  /permissoes/{id}:
+    get:
+      summary: Busca uma permissão pelo ID
+      tags:
+        - Permissões
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID da permissão
+      responses:
+        '200':
+          description: Permissão encontrada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '404':
+          description: Permissão não encontrada.
+        '500':
+          description: Erro ao buscar permissão.
+
+    put:
+      summary: Atualiza uma permissão pelo ID
+      tags:
+        - Permissões
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID da permissão
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PermissionInput'
+      responses:
+        '200':
+          description: Permissão atualizada com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Permission'
+        '404':
+          description: Permissão não encontrada.
+        '500':
+          description: Erro ao atualizar permissão.
+
+    delete:
+      summary: Exclui uma permissão pelo ID
+      tags:
+        - Permissões
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID da permissão
+      responses:
+        '204':
+          description: Permissão excluída com sucesso.
+        '404':
+          description: Permissão não encontrada.
+        '500':
+          description: Erro ao excluir permissão.
+
   /auth/login:
     post:
       summary: Autentica um usuário e retorna um token de acesso.
@@ -406,6 +516,122 @@ paths:
           description: Credenciais inválidas.
         '500':
           description: Erro interno do servidor.
+  /roles:
+    get:
+      summary: Retorna todos os roles
+      tags:
+        - Roles
+      responses:
+        '200':
+          description: Lista de roles retornada com sucesso.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Role'
+        '500':
+          description: Erro ao buscar roles.
+
+    post:
+      summary: Cria um novo role
+      tags:
+        - Roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+      responses:
+        '201':
+          description: Role criado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '400':
+          description: Erro ao criar role - dados inválidos ou role já existe.
+
+  /roles/{id}:
+    get:
+      summary: Busca um role pelo ID
+      tags:
+        - Roles
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do role
+      responses:
+        '200':
+          description: Role encontrado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '404':
+          description: Role não encontrado.
+        '500':
+          description: Erro ao buscar role.
+
+    put:
+      summary: Atualiza um role pelo ID
+      tags:
+        - Roles
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoleInput'
+      responses:
+        '200':
+          description: Role atualizado com sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Role'
+        '404':
+          description: Role não encontrado.
+        '500':
+          description: Erro ao atualizar role.
+
+    delete:
+      summary: Exclui um role pelo ID
+      tags:
+        - Roles
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID do role
+      responses:
+        '200':
+          description: Role excluído com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Role excluído com sucesso"
+        '404':
+          description: Role não encontrado.
+        '500':
+          description: Erro ao excluir role.
 
 
 components:
@@ -422,7 +648,15 @@ components:
         paginas:
           type: integer
         autor:
-          type: string  
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"  
 
     BookDetail:
       type: object
@@ -437,6 +671,14 @@ components:
           type: integer
         autor:
           $ref: '#/components/schemas/Author'
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
 
     BookInput:  
       type: object
@@ -468,6 +710,14 @@ components:
           type: string
         nacionalidade:
           type: string
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
     
     AuthorInput:
       type: object
@@ -492,6 +742,18 @@ components:
         senha:
           type: string
           description: A senha é armazenada de forma segura.
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleUser'
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
     
     UserInput:
       type: object
@@ -528,3 +790,108 @@ components:
         expiresIn:
           type: integer
           description: Duração em segundos até o token expirar.
+
+    Permission:
+      type: object
+      properties:
+        _id:
+          type: string
+        nome:
+          type: string
+        descricao:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"  
+      example:
+        id: "64b1f2d54f1c2a001c9f78b2"
+        nome: "Admin"
+        descricao: "Permissão para administradores"
+        createdAt: "2024-11-05T11:49:59.103Z"
+        updatedAt: "2024-11-05T11:49:59.103Z"
+
+    PermissionInput:
+      type: object
+      required:
+        - nome
+        - descricao
+      properties:
+        nome:
+          type: string
+          example: "Admin"
+        descricao:
+          type: string
+          example: "Permissão para administradores"
+    Role:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "672a0667e4f6ac4c1baa1a82"
+        nome:
+          type: string
+          example: "editor"
+        descricao:
+          type: string
+          example: "Pode editar itens no sistema"
+        permissoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+
+    RoleUser:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "672a0667e4f6ac4c1baa1a82"
+        nome:
+          type: string
+          example: "editor"
+        descricao:
+          type: string
+          example: "Pode editar itens no sistema"
+        permissoes:
+          type: array
+          items:
+            type: string
+            example: "672a0667e4f6ac4c1baa1a82"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2024-11-05T11:49:59.103Z"
+
+    RoleInput:
+      type: object
+      required:
+        - nome
+        - descricao
+      properties:
+        nome:
+          type: string
+          example: "editor"
+        descricao:
+          type: string
+          example: "Pode editar itens no sistema"
+        permissoes:
+          type: array
+          items:
+            type: string
+            description: ID da permissão
+            example: "672a0667e4f6ac4c1baa1a82"

@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import getAccessToken from "./tokenService.js";
+import TokenService from "./tokenService.js";
 
 class AuthService {
   static async login(email, senha) {
@@ -16,7 +16,7 @@ class AuthService {
       throw new Error("Usuário ou senha estão incorretos!");
     }
 
-    const accessToken = getAccessToken(user);
+    const accessToken = TokenService.getAccessToken(user);
     const expiresIn = 86400;
 
     return { accessToken, expiresIn };
