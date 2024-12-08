@@ -107,6 +107,44 @@ Consultar documentação da Api:
 http://localhost:3000/api-docs
 ```
 
+# Usando Docker e Docker Compose
+Com o Docker configurado, você pode rodar o projeto de maneira rápida e prática. Esta opção é uma alternativa para o passo anterior. Siga as instruções abaixo:
+
+### 1. Inicializando o ambiente
+O projeto já está preparado para ser executado com Docker Compose. Para iniciar, execute o seguinte comando na raiz do projeto:
+
+```shell script
+docker-compose up --build
+```
+
+Este comando irá:
+
+- Construir a imagem do Docker.
+- Iniciar o container com sua aplicação.
+
+### 2. Acessando a aplicação
+Após iniciar o Docker Compose, você pode acessar a API no seguinte endereço:
+
+```
+API: http://localhost:3000
+```
+
+### 3. Parando os containers
+Quando não precisar mais do ambiente em execução, use o comando abaixo para parar e remover os containers:
+
+```
+docker-compose down
+```
+
+### 4. Executando comandos no container
+Se precisar acessar o shell do container para depuração ou execução de comandos, use:
+
+```
+docker exec -it <container_id> sh
+```
+
+Dica: Você pode obter o <container_id> executando docker ps e localizando o ID do container correspondente.
+
 ## Autor
 <b>Thallyta Macedo Carvalho de Castro</b>
 
