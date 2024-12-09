@@ -3,13 +3,17 @@ import connectDatabase from "./config/dbConnect.js";
 import routes from "./routes/index.js";
 import errorHandle from "./middlewares/errorHandle.js";
 import resourceNotFoundHandle from "./middlewares/resourceNotFoundHandle.js";
-import swaggerSetup from "./config/swaggerConfig.js"; 
+import swaggerSetup from "./config/swaggerConfig.js";
+import logger from "./config/logger.js" 
 
 const db = await connectDatabase();
 
-db.on("error", console.log.bind(console, "Erro de conexão"));
+db.on("error", (error) => {
+  logger.info(`Erro de conexão: ${error}`);
+});
+
 db.once("open", () => {
-  console.log("conexão com o banco feita com sucesso");
+  logger.info("Conexão com o banco feita com sucesso");
 });
 
 
