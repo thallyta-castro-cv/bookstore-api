@@ -1,18 +1,29 @@
 name: pre-push
+
 on:
   push:
-    branches-ignore:
-      - master
+    branches:
+      - development
+
 jobs:
-  test:
-    name: Linter
+  linter:
+    name: Pre-Push Job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - name: Instala as dependencias
+      - name: Instala as dependências
         run: npm i
       - name: Roda o linter
         run: npm run lint
+      - name: Trigger Next Workflow
+        if: success()
+        run: |
+          echo "Triggering create-pull-request workflow"
+          curl -X POST -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"event_type":"trigger-create-pr"}' \
+            https://api.github.com/repos/${{ github.repository }}/dispatches

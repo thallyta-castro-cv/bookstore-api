@@ -1,0 +1,24 @@
+name: create-pull-request
+
+on:
+  repository_dispatch:
+    types:
+      - trigger-create-pr
+
+jobs:
+  create-pr:
+    name: Create Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          branch: development
+          title: "Automated Pull Request from development to master"
+          body: |
+            This pull request was automatically created by a GitHub Action.
+            Please review the changes and approve if everything looks good.
+            

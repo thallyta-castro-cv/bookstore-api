@@ -4,7 +4,6 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "lint": "eslint"
   },
@@ -18,7 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.9.0",
+    "mongodb": "^6.11.0",
     "mongoose": "^8.6.4",
     "nodemon": "^3.0.1",
     "swagger-ui-express": "^5.0.1",
