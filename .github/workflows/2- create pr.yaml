@@ -15,10 +15,9 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: master
-          branch: development
+          base: ${{ github.event.client_payload.base }}
+          branch: ${{ github.event.client_payload.branch }}
           title: "Automated Pull Request from development to master"
           body: |
             This pull request was automatically created by a GitHub Action.
             Please review the changes and approve if everything looks good.
-            
